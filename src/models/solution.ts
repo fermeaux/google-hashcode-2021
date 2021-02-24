@@ -1,1 +1,3 @@
-export interface Solution {}
+export interface Solution {
+    fileName: string
+}

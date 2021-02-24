@@ -2,8 +2,11 @@ import fs from 'fs'
 import { Solution } from './models'
 
 export function write (solutions: Solution[]): void {
-  fs.writeFile('helloworld.txt', 'Hello World!', function (err) {
-    if (err) return console.log(err)
-    console.log('Hello World > helloworld.txt')
+  solutions.forEach(solution => {
+    fs.writeFileSync(`outputs/${solution.fileName}.out`, stringifySolution(solution))
   })
+}
+
+function stringifySolution (solution: Solution): string {
+  return 'Hello World'
 }
