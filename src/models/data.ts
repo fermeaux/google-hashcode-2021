@@ -1,3 +1,1 @@
-export interface Data {
-    fileName: string
-}
+export interface Data {}
