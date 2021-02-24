@@ -32,8 +32,7 @@
     "dev": "run-p *:watch",
     "launch": "node ./dist/index.js",
     "launch:watch": "sleep 0.5 && nodemon -q --watch ./dist ./dist/index.js",
-    "start": "run-s clean build launch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "run-s clean build launch"
   },
   "version": "1.0.0"
 }
