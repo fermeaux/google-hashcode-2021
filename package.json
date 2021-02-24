@@ -1,0 +1,26 @@
+{
+  "author": "Timothée Fermeaux",
+  "description": "",
+  "devDependencies": {
+    "eslint": "^7.20.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "nodemon": "^2.0.7"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "main": "src/index.mjs",
+  "name": "google-hashcode-2021",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com-perso:fermeaux/google-hashcode-2021.git"
+  },
+  "scripts": {
+    "start": "nodemon -q --watch ./src --watch ./output ./src/index.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "version": "1.0.0"
+}
