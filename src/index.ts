@@ -1,7 +1,7 @@
-import { parse } from './parser.mjs'
-import { read } from './reader.mjs'
-import { resolve } from './resolver.mjs'
-import { write } from './writer.mjs'
+import { parse } from './parser'
+import { read } from './reader'
+import { resolve } from './resolver'
+import { write } from './writer'
 
 console.log('===== START PROGRAM =====')
 const inputs = read()

@@ -7,20 +7,27 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.3.1",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "npm-run-all": "^4.1.5",
+    "tsup": "^4.3.1"
   },
   "keywords": [],
   "license": "ISC",
-  "main": "src/index.mjs",
+  "main": "src/index.ts",
   "name": "google-hashcode-2021",
   "repository": {
     "type": "git",
     "url": "git@github.com-perso:fermeaux/google-hashcode-2021.git"
   },
   "scripts": {
-    "start": "nodemon -q --watch ./src --watch ./output ./src/index.mjs",
+    "build": "tsup src/index.ts",
+    "build:watch": "tsup src/index.ts --watch",
+    "clean": "rm -rf dist",
+    "dev": "run-p *:watch",
+    "launch": "node ./dist/index.js",
+    "launch:watch": "sleep 0.5 && nodemon -q --watch ./dist ./dist/index.js",
+    "start": "run-s clean build launch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "type": "module",
   "version": "1.0.0"
 }
