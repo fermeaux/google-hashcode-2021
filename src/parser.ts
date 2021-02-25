@@ -1,4 +1,4 @@
-import { Data, Input, Simulation } from './models'
+import { Data, Input, Simulation, Street } from './models'
 
 export function parse (input: Input): Data {
   let simulation = new Simulation()
@@ -18,10 +18,17 @@ function parseFirstLine (line: string, simulation: Simulation): Simulation {
 }
 
 function parseAllStreets (lines: string[], simulation: Simulation): Simulation {
+  simulation.streets = []
   lines.forEach(line => (simulation = parseStreet(line, simulation)))
   return simulation
 }
 
 function parseStreet (line: string, simulation: Simulation): Simulation {
+  // eslint-disable-next-line no-unused-vars
+  const [begin, end, name, duration] = line.split(' ')
+  const street = new Street()
+  street.name = name
+  street.duration = +duration
+  simulation.streets.push(street)
   return simulation
 }
