@@ -2,7 +2,7 @@ import {Car, Data, Intersection, Solution, Street} from './models'
 import {Schedule} from "./models/schedule";
 
 export function resolve(data: Data): Solution {
-  let {cars, streets, intersections, duration} = data.simulation
+  let {cars, streets, intersections, intersectionMap, duration} = data.simulation
   const filteredCars = [];
   // Add metrics
   for(let car of cars) {
@@ -14,9 +14,11 @@ export function resolve(data: Data): Solution {
 
   console.log(filteredCars);
 
-  const schedules = computeIntersectionOnlyOneIncomingStreet(intersections, duration);
+  const {schedules, filteredIntersections} = computeIntersectionOnlyOneIncomingStreet(intersectionMap, duration)
 
-  return {schedules};
+  console.log(filteredIntersections)
+
+  return {schedules };
 }
 
 const computeOptimalPathTime = (car: Car): number => {
@@ -42,8 +44,8 @@ const computeNumberOfCarTravelingOnStreet = (
   return numberOfCar;
 }
 
-const computeIntersectionOnlyOneIncomingStreet = (intersections: Intersection[], duration: number): Schedule[] => {
-  const intersectionsWithOnlyOneStreet = intersections.filter(intersection => intersection.incoming.length === 1)
+const computeIntersectionOnlyOneIncomingStreet = (intersections: Map<number, Intersection>, duration: number): {schedules: Schedule[], filteredIntersections: Map<number, Intersection>} => {
+  const intersectionsWithOnlyOneStreet = Array.from(intersections.values()).filter(intersection => intersection.incoming.length === 1)
   const schedules: Schedule[] = []
   intersectionsWithOnlyOneStreet.map(intersectionWithOnlyOneStreet => {
     const schedule = {
@@ -55,8 +57,9 @@ const computeIntersectionOnlyOneIncomingStreet = (intersections: Intersection[],
       }]
     }
     schedules.push(schedule)
+    intersections.delete(intersectionWithOnlyOneStreet.id)
     return intersectionWithOnlyOneStreet
   })
 
-  return schedules
+  return {schedules, filteredIntersections: intersections}
 }
