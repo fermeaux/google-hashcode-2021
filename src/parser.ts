@@ -1,8 +1,9 @@
-import { Car, Data, Input, Simulation, Street } from './models'
+import { Car, Data, Input, Intersection, Simulation, Street } from './models'
 
 export function parse (input: Input): Data {
   let simulation = new Simulation()
   simulation = parseFirstLine(input.lines[0], simulation)
+  simulation = parseAllIntersections(simulation)
   simulation = parseAllStreets(input.lines.slice(1, simulation.streetCount + 1), simulation)
   simulation = parseAllCars(input.lines.slice(simulation.streetCount + 1), simulation)
   return { simulation }
@@ -15,6 +16,21 @@ function parseFirstLine (line: string, simulation: Simulation): Simulation {
   simulation.streetCount = +streetCount
   simulation.carCount = +carCount
   simulation.scoreToDestination = +scoreToDestination
+  return simulation
+}
+
+function parseAllIntersections (simulation: Simulation): Simulation {
+  for (let i = 0; i < simulation.intersectionCount; i++) {
+    simulation = parseIntersection(i, simulation)
+  }
+  return simulation
+}
+
+function parseIntersection (id: number, simulation: Simulation): Simulation {
+  const intersection = new Intersection()
+  intersection.id = id
+  simulation.intersections.push(intersection)
+  simulation.intersectionMap.set(id, intersection)
   return simulation
 }
 
@@ -35,11 +51,11 @@ function parseStreet (line: string, simulation: Simulation): Simulation {
 }
 
 function parseAllCars (lines: string[], simulation: Simulation): Simulation {
-  lines.forEach((line, id) => (simulation = parseCar(line, simulation, id)))
+  lines.forEach((line, id) => (simulation = parseCar(line, id, simulation)))
   return simulation
 }
 
-function parseCar (line: string, simulation: Simulation, id: number): Simulation {
+function parseCar (line: string, id: number, simulation: Simulation): Simulation {
   const route = line.split(' ').slice(1)
   const car = new Car()
   car.id = id
