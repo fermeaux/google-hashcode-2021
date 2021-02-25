@@ -5,18 +5,26 @@ export function resolve(data: Data): Solution {
   let {cars, streets, intersections, intersectionMap, duration} = data.simulation
   const filteredCars = [];
   // Add metrics
-  for(let car of cars) {
+  for(const car of cars) {
     car.optimalPathTime = computeOptimalPathTime(car);
     if(car.optimalPathTime <= duration) {
       filteredCars.push(car);
     }
   }
+  // console.log(filteredCars);
+  // Filters streets
+  const filteredStreet = [];
+  for(const street of streets) {
+    street.carsTravelingOnStreet = computeNumberOfCarsTravelingOnStreet(filteredCars, street);
+    if(street.carsTravelingOnStreet !== 0) {
+      filteredStreet.push(street);
+    }
+  }
+  // console.log(filteredStreet);
 
-  console.log(filteredCars);
-
+  // Filters intersections and building first schedules.
   const {schedules, filteredIntersections} = computeIntersectionOnlyOneIncomingStreet(intersectionMap, duration)
-
-  console.log(filteredIntersections)
+  // console.log(filteredIntersections)
 
   return {schedules };
 }
@@ -31,7 +39,7 @@ const computeOptimalPathTime = (car: Car): number => {
   return cost;
 };
 
-const computeNumberOfCarTravelingOnStreet = (
+const computeNumberOfCarsTravelingOnStreet = (
   cars: Car[],
   street: Street
 ): number => {

@@ -9,6 +9,8 @@ export class Street {
     isGreen: boolean
     cars: Car[]
 
+    carsTravelingOnStreet?: number
+
     constructor () {
       this.cars = []
     }
