@@ -26,6 +26,27 @@ export function resolve(data: Data): Solution {
   const {schedules, filteredIntersections} = computeIntersectionOnlyOneIncomingStreet(intersectionMap, duration)
   // console.log(filteredIntersections)
 
+  for(const intersection of filteredIntersections.values()) {
+    let cycleTrafficLight = [];
+    const nbIncomingStreets = intersection.incoming.length;
+
+    let totalNumberOfCarsGoingThrough = 0;
+    for(const street of intersection.incoming) {
+      totalNumberOfCarsGoingThrough += street.carsTravelingOnStreet;
+      cycleTrafficLight.push({
+        streetName: street.name,
+        openTime: 1
+      });
+    }
+
+    const schedule = {
+      intersection,
+      nbIncomingStreets,
+      cycleTrafficLight
+    }
+    schedules.push(schedule)
+  }
+
   return {schedules };
 }
 
