@@ -21,7 +21,7 @@ export function resolve (data: Data): Solution {
     } else {
       const cycleTrafficLight = []
 
-      for (const street of intersection.incoming) {
+      for (const street of intersection.incomingFiltered) {
         cycleTrafficLight.push({
           streetName: street.name,
           openTime: 1
