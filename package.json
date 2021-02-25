@@ -32,7 +32,7 @@
     "clean": "rimraf -rf dist",
     "dev": "run-p *:watch",
     "launch": "node ./dist/index.js",
-    "launch:watch": "sleep 0.5 && nodemon -q --watch ./dist ./dist/index.js",
+    "launch:watch": "sleep 0.5 && nodemon -q --watch ./dist --watch .env ./dist/index.js",
     "start": "run-s clean build launch"
   },
   "version": "1.0.0"
