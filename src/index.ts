@@ -12,13 +12,13 @@ inputs.forEach((input) => {
   console.log('\n===== FILE NAME :', input.fileName)
 
   const data = parse(input)
-  console.log('DATA : ', data)
+  // console.log('DATA : ', data)
 
   const solution = resolve(data)
-  console.log('SOLUTION : ', solution)
+  // console.log('SOLUTION : ', solution)
 
   write(input.fileName, solution)
-  console.log('====================\n')
+  // console.log('====================\n')
 })
 
 console.log('===== END PROGRAM =====')
