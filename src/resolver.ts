@@ -1,23 +1,14 @@
-import {Car, Data, Intersection, Solution, Street} from './models'
-import {Schedule} from "./models/schedule";
+import { Car, Data, Intersection, Solution, Street } from './models'
+import { Schedule } from './models/schedule'
 
-export function resolve(data: Data): Solution {
-  let {cars, streets, intersections, intersectionMap, duration} = data.simulation
-  const filteredCars = [];
-  // Add metrics
-  for(const car of cars) {
-    car.optimalPathTime = computeOptimalPathTime(car);
-    if(car.optimalPathTime <= duration) {
-      filteredCars.push(car);
-    }
-  }
-  // console.log(filteredCars);
+export function resolve (data: Data): Solution {
+  const { streets, intersections, intersectionMap, duration, filteredCars } = data.simulation
   // Filters streets
-  const filteredStreet = [];
-  for(const street of streets) {
-    street.carsTravelingOnStreet = computeNumberOfCarsTravelingOnStreet(filteredCars, street);
-    if(street.carsTravelingOnStreet !== 0) {
-      filteredStreet.push(street);
+  const filteredStreet = []
+  for (const street of streets) {
+    street.carsTravelingOnStreet = computeNumberOfCarsTravelingOnStreet(filteredCars, street)
+    if (street.carsTravelingOnStreet !== 0) {
+      filteredStreet.push(street)
     }
   }
   // console.log(filteredStreet);
@@ -42,7 +33,7 @@ export function resolve(data: Data): Solution {
       schedules.push(schedule)
     } else {
       let cycleTrafficLight = [];
-      const totalNumberOfCarsGoingThrough = 0;
+      let totalNumberOfCarsGoingThrough = 0;
 
       for(const street of intersection.incoming) {
         totalNumberOfCarsGoingThrough += street.carsTravelingOnStreet;
@@ -61,30 +52,20 @@ export function resolve(data: Data): Solution {
     }
   }
 
-  return {schedules };
+  return { schedules }
 }
-
-const computeOptimalPathTime = (car: Car): number => {
-  let cost = 0;
-
-  for (const street of car.route) {
-    cost += street.duration;
-  }
-
-  return cost;
-};
 
 const computeNumberOfCarsTravelingOnStreet = (
   cars: Car[],
   street: Street
 ): number => {
-  let numberOfCar = 0;
+  let numberOfCar = 0
   for (const car of cars) {
     if (car.route.find((carOnStreet) => carOnStreet.name === street.name)) {
-      numberOfCar++;
+      numberOfCar++
     }
   }
-  return numberOfCar;
+  return numberOfCar
 }
 
 const computeIntersectionOnlyOneIncomingStreet = (intersections: Map<number, Intersection>, duration: number): {schedules: Schedule[], filteredIntersections: Map<number, Intersection>} => {
@@ -104,5 +85,5 @@ const computeIntersectionOnlyOneIncomingStreet = (intersections: Map<number, Int
     return intersectionWithOnlyOneStreet
   })
 
-  return {schedules, filteredIntersections: intersections}
+  return { schedules, filteredIntersections: intersections }
 }

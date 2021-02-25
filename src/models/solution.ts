@@ -1,4 +1,4 @@
-import {Schedule} from "./schedule";
+import { Schedule } from './schedule'
 
 export interface Solution {
     schedules: Schedule[]
