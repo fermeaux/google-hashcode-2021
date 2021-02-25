@@ -8,4 +8,8 @@ export class Street {
     name: string
     isGreen: boolean
     cars: Car[]
+
+    constructor () {
+      this.cars = []
+    }
 }

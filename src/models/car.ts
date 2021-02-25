@@ -1,7 +1,10 @@
 import { Street } from './street'
 
 export class Car {
+    id: number
     route: Street[]
-    // startIntersection: Intersection
-    currentStreet: Street
+
+    constructor () {
+      this.route = []
+    }
 }

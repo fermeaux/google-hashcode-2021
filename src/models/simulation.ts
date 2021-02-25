@@ -5,11 +5,23 @@ import { Street } from './street'
 export class Simulation {
     duration: number
     cars: Car[]
+    carMap: Map<number, Car>
     carCount: number
     intersections: Intersection[]
+    intersectionMap: Map<number, Intersection>
     intersectionCount: number
     streets: Street[]
+    streetMap: Map<string, Street>
     streetCount: number
     scoreToDestination: number
     timeUntilEnd: number
+
+    constructor () {
+      this.cars = []
+      this.carMap = new Map()
+      this.intersections = []
+      this.intersectionMap = new Map()
+      this.streets = []
+      this.streetMap = new Map()
+    }
 }
