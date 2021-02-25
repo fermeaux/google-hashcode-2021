@@ -8,10 +8,10 @@ export class Street {
     name: string
     isGreen: boolean
     cars: Car[]
-    carsTravelingOnStreet: number
+    carsTraveling: number
 
     constructor () {
       this.cars = []
-      this.carsTravelingOnStreet = 0
+      this.carsTraveling = 0
     }
 }
