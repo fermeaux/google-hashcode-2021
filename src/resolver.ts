@@ -2,8 +2,7 @@ import { Data, Solution } from './models'
 import { Schedule } from './models/schedule'
 
 export function resolve (data: Data): Solution {
-  const { streets, intersections, duration, filteredCars } = data.simulation
-  const filteredStreet = streets.filter(street => street.carsTraveling > 0)
+  const { intersections, duration } = data.simulation
 
   const schedules: Schedule[] = []
   for (const intersection of intersections) {

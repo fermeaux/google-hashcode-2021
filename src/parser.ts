@@ -6,6 +6,7 @@ export function parse (input: Input): Data {
   simulation = parseAllIntersections(simulation)
   simulation = parseAllStreets(input.lines.slice(1, simulation.streetCount + 1), simulation)
   simulation = parseAllCars(input.lines.slice(simulation.streetCount + 1), simulation)
+  simulation = filterIncomingStreets(simulation)
   return { simulation }
 }
 
@@ -74,5 +75,12 @@ function parseCar (line: string, id: number, simulation: Simulation): Simulation
   simulation.cars.push(car)
   simulation.carMap.set(car.id, car)
   if (car.optimalPathTime <= simulation.duration) simulation.filteredCars.push(car)
+  return simulation
+}
+
+function filterIncomingStreets (simulation: Simulation): Simulation {
+  simulation.intersections.forEach(intersection => {
+    intersection.incomingFiltered = intersection.incoming.filter(street => street.carsTraveling > 0)
+  })
   return simulation
 }
