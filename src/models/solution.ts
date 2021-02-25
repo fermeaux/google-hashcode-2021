@@ -1,1 +1,5 @@
-export interface Solution {}
+import {Schedule} from "./schedule";
+
+export interface Solution {
+    schedules: Schedule[]
+}
