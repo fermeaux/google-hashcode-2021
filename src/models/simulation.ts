@@ -7,6 +7,7 @@ export class Simulation {
     cars: Car[]
     carMap: Map<number, Car>
     carCount: number
+    filteredCars: Car[]
     intersections: Intersection[]
     intersectionMap: Map<number, Intersection>
     intersectionCount: number
@@ -19,6 +20,7 @@ export class Simulation {
     constructor () {
       this.cars = []
       this.carMap = new Map()
+      this.filteredCars = []
       this.intersections = []
       this.intersectionMap = new Map()
       this.streets = []

@@ -63,8 +63,13 @@ function parseCar (line: string, id: number, simulation: Simulation): Simulation
   const route = line.split(' ').slice(1)
   const car = new Car()
   car.id = id
-  route.forEach(street => car.route.push(simulation.streetMap.get(street)))
+  route.forEach(streetName => {
+    const street = simulation.streetMap.get(streetName)
+    car.optimalPathTime = street.duration
+    car.route.push(street)
+  })
   simulation.cars.push(car)
   simulation.carMap.set(car.id, car)
+  if (car.optimalPathTime <= simulation.duration) simulation.filteredCars.push(car)
   return simulation
 }
