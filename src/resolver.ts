@@ -2,9 +2,11 @@ import {Car, Data, Intersection, Solution, Street} from './models'
 import {Schedule} from "./models/schedule";
 
 export function resolve(data: Data): Solution {
-  const {cars, streets, intersections} = data.simulation
+  const {cars, streets, intersections, duration} = data.simulation
 
-  return {};
+  const schedules = computeIntersectionOnlyOneIncomingStreet(intersections, duration);
+
+  return {schedules};
 }
 
 const computeOptimalPathTime = (car: Car): number => {
