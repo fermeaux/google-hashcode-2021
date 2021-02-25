@@ -1,27 +1,19 @@
-import { Car, Data, Intersection, Solution, Street } from './models'
+import { Car, Data, Solution, Street } from './models'
 import { Schedule } from './models/schedule'
 
 export function resolve (data: Data): Solution {
-  const { streets, intersections, intersectionMap, duration, filteredCars } = data.simulation
-  // Filters streets
-  const filteredStreet = []
-  for (const street of streets) {
-    street.carsTravelingOnStreet = computeNumberOfCarsTravelingOnStreet(filteredCars, street)
-    if (street.carsTravelingOnStreet !== 0) {
-      filteredStreet.push(street)
-    }
-  }
-  // console.log(filteredStreet);
+  const { streets, intersections, duration, filteredCars } = data.simulation
+  const filteredStreet = streets.filter(street => street.carsTravelingOnStreet > 0)
 
   // Filters intersections and building first schedules.
   // const {schedules, filteredIntersections} = computeIntersectionOnlyOneIncomingStreet(intersectionMap, duration)
   // console.log(filteredIntersections)
 
   const schedules: Schedule[] = []
-  for(const intersection of intersections) {
-    const nbIncomingStreets = intersection.incoming.length;
+  for (const intersection of intersections) {
+    const nbIncomingStreets = intersection.incoming.length
 
-    if(nbIncomingStreets === 1) {
+    if (nbIncomingStreets === 1) {
       const schedule = {
         intersection: intersection,
         nbIncomingStreets: 1,
@@ -32,15 +24,15 @@ export function resolve (data: Data): Solution {
       }
       schedules.push(schedule)
     } else {
-      let cycleTrafficLight = [];
-      let totalNumberOfCarsGoingThrough = 0;
+      const cycleTrafficLight = []
+      let totalNumberOfCarsGoingThrough = 0
 
-      for(const street of intersection.incoming) {
-        totalNumberOfCarsGoingThrough += street.carsTravelingOnStreet;
+      for (const street of intersection.incoming) {
+        totalNumberOfCarsGoingThrough += street.carsTravelingOnStreet
         cycleTrafficLight.push({
           streetName: street.name,
           openTime: 1
-        });
+        })
       }
 
       const schedule = {
@@ -66,24 +58,4 @@ const computeNumberOfCarsTravelingOnStreet = (
     }
   }
   return numberOfCar
-}
-
-const computeIntersectionOnlyOneIncomingStreet = (intersections: Map<number, Intersection>, duration: number): {schedules: Schedule[], filteredIntersections: Map<number, Intersection>} => {
-  const intersectionsWithOnlyOneStreet = Array.from(intersections.values()).filter(intersection => intersection.incoming.length === 1)
-  const schedules: Schedule[] = []
-  intersectionsWithOnlyOneStreet.map(intersectionWithOnlyOneStreet => {
-    const schedule = {
-      intersection: intersectionWithOnlyOneStreet,
-      nbIncomingStreets: 1,
-      cycleTrafficLight: [{
-        streetName: intersectionWithOnlyOneStreet.incoming[0].name,
-        openTime: duration
-      }]
-    }
-    schedules.push(schedule)
-    intersections.delete(intersectionWithOnlyOneStreet.id)
-    return intersectionWithOnlyOneStreet
-  })
-
-  return { schedules, filteredIntersections: intersections }
 }

@@ -67,6 +67,7 @@ function parseCar (line: string, id: number, simulation: Simulation): Simulation
     const street = simulation.streetMap.get(streetName)
     car.optimalPathTime = street.duration
     car.route.push(street)
+    street.carsTravelingOnStreet++
   })
   simulation.cars.push(car)
   simulation.carMap.set(car.id, car)
