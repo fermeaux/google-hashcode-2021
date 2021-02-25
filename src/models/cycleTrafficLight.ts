@@ -1,4 +1,4 @@
 export class CycleTrafficLight {
-    streetName: string
-    openTime: number
+  streetName: string;
+  openTime: number;
 }
