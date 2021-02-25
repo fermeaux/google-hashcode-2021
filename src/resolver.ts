@@ -80,7 +80,7 @@ const computeIntersectionOnlyOneIncomingStreet = (intersections: Map<number, Int
     const schedule = {
       intersection: intersectionWithOnlyOneStreet,
       nbIncomingStreets: 1,
-      CycleTrafficLight: [{
+      cycleTrafficLight: [{
         streetName: intersectionWithOnlyOneStreet.incoming[0].name,
         openTime: duration
       }]

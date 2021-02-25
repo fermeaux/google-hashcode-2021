@@ -19,7 +19,7 @@ function stringifySolution (solution: Solution): string {
 function stringifySchedule (schedule: Schedule): string {
   let res = ''
   res += `${schedule.intersection.id}\n`
-  res += `${schedule.CycleTrafficLight.length}\n`
-  schedule.CycleTrafficLight.forEach(cycle => (res += `${cycle.streetName} ${cycle.openTime}\n`))
+  res += `${schedule.cycleTrafficLight.length}\n`
+  schedule.cycleTrafficLight.forEach(cycle => (res += `${cycle.streetName} ${cycle.openTime}\n`))
   return res
 }

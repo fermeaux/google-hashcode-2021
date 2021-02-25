@@ -4,5 +4,5 @@ import { CycleTrafficLight } from "./cycleTrafficLight";
 export class Schedule {
   intersection: Intersection;
   nbIncomingStreets: number;
-  CycleTrafficLight: CycleTrafficLight[];
+  cycleTrafficLight: CycleTrafficLight[];
 }
