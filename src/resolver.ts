@@ -23,28 +23,42 @@ export function resolve(data: Data): Solution {
   // console.log(filteredStreet);
 
   // Filters intersections and building first schedules.
-  const {schedules, filteredIntersections} = computeIntersectionOnlyOneIncomingStreet(intersectionMap, duration)
+  // const {schedules, filteredIntersections} = computeIntersectionOnlyOneIncomingStreet(intersectionMap, duration)
   // console.log(filteredIntersections)
 
-  for(const intersection of filteredIntersections.values()) {
-    let cycleTrafficLight = [];
+  const schedules: Schedule[] = []
+  for(const intersection of intersections) {
     const nbIncomingStreets = intersection.incoming.length;
 
-    let totalNumberOfCarsGoingThrough = 0;
-    for(const street of intersection.incoming) {
-      totalNumberOfCarsGoingThrough += street.carsTravelingOnStreet;
-      cycleTrafficLight.push({
-        streetName: street.name,
-        openTime: 1
-      });
-    }
+    if(nbIncomingStreets === 1) {
+      const schedule = {
+        intersection: intersection,
+        nbIncomingStreets: 1,
+        cycleTrafficLight: [{
+          streetName: intersection.incoming[0].name,
+          openTime: duration
+        }]
+      }
+      schedules.push(schedule)
+    } else {
+      let cycleTrafficLight = [];
+      const totalNumberOfCarsGoingThrough = 0;
 
-    const schedule = {
-      intersection,
-      nbIncomingStreets,
-      cycleTrafficLight
+      for(const street of intersection.incoming) {
+        totalNumberOfCarsGoingThrough += street.carsTravelingOnStreet;
+        cycleTrafficLight.push({
+          streetName: street.name,
+          openTime: 1
+        });
+      }
+
+      const schedule = {
+        intersection,
+        nbIncomingStreets,
+        cycleTrafficLight
+      }
+      schedules.push(schedule)
     }
-    schedules.push(schedule)
   }
 
   return {schedules };
