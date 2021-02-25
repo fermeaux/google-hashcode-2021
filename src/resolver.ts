@@ -1,4 +1,5 @@
-import { Car, Data, Solution, Street } from "./models";
+import {Car, Data, Intersection, Solution, Street} from './models'
+import {Schedule} from "./models/schedule";
 
 export function resolve(data: Data): Solution {
   return {};
@@ -25,4 +26,23 @@ const computeNumberOfCarTravelingOnStreet = (
     }
   }
   return numberOfCar;
-};
+}
+
+const computeIntersectionOnlyOneIncomingStreet = (intersections: Intersection[], duration: number): Schedule[] => {
+  const intersectionsWithOnlyOneStreet = intersections.filter(intersection => intersection.incoming.length === 1)
+  const schedules: Schedule[] = []
+  intersectionsWithOnlyOneStreet.map(intersectionWithOnlyOneStreet => {
+    const schedule = {
+      intersection: intersectionWithOnlyOneStreet,
+      nbIncomingStreets: 1,
+      CycleTrafficLight: [{
+        streetName: intersectionWithOnlyOneStreet.incoming[0].name,
+        openTime: duration
+      }]
+    }
+    schedules.push(schedule)
+    return intersectionWithOnlyOneStreet
+  })
+
+  return schedules
+}
