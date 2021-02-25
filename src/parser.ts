@@ -45,8 +45,12 @@ function parseStreet (line: string, simulation: Simulation): Simulation {
   const street = new Street()
   street.name = name
   street.duration = +duration
+  street.begin = simulation.intersectionMap.get(+begin)
+  street.end = simulation.intersectionMap.get(+end)
   simulation.streets.push(street)
   simulation.streetMap.set(street.name, street)
+  street.begin.outcoming.push(street)
+  street.end.incoming.push(street)
   return simulation
 }
 
