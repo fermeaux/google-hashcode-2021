@@ -1,5 +1,6 @@
 import fs from 'fs'
 import { Solution } from './models'
+import { Schedule } from './models/schedule'
 
 export function write (fileName: string, solution: Solution): void {
   if (process.env.DEBUG === 'true') return
@@ -7,5 +8,18 @@ export function write (fileName: string, solution: Solution): void {
 }
 
 function stringifySolution (solution: Solution): string {
-  return 'Hello World'
+  let res = ''
+  res += solution.schedules.length + '\n'
+  solution.schedules.forEach(schedule => {
+    res += stringifySchedule(schedule)
+  })
+  return res
+}
+
+function stringifySchedule (schedule: Schedule): string {
+  let res = ''
+  res += `${schedule.intersection.id}\n`
+  res += `${schedule.CycleTrafficLight.length}\n`
+  schedule.CycleTrafficLight.forEach(cycle => (res += `${cycle.streetName} ${cycle.openTime}\n`))
+  return res
 }
